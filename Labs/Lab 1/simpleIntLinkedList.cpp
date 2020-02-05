@@ -28,7 +28,7 @@ void List::removeHead()
 
 void List::print() {
 	ListNode *temp = _head;
-	while (temp != NULL) {
+	while (temp) {
 		cout << temp->_item << " ";
 		temp = temp->_next;
 	}
@@ -46,30 +46,35 @@ bool List::exist(int n) {
 
 int List::headItem()
 {
-	return _head != NULL ? _head->_item : 0; // modify this
+	return !empty() ? _head->_item : 0; // modify this
 }
 
 List::~List()
 {
 	while (_size != 0)
 		removeHead();
-};
+}
 
 bool List::empty() {
-	return _head == NULL;
+	return !_head;
 }
 
 int List::tailItem() {
-	if (List::empty()) return NULL;
+	if (empty()) return NULL;
 	ListNode* temp = _head;
-	while (temp->_next != NULL) temp = temp->_next;
+	while (temp->_next) 
+		temp = temp->_next;
 	return temp->_item;
 }
 
 void List::removeTail() {
-	if (List::empty() || _head->_next == NULL) return;
+	if (empty()) return;
+	if (!_head->_next) {
+		removeHead();
+		return;
+	}
 	ListNode* newTail = _head, *temp = _head->_next;
-	while (temp->_next != NULL) {
+	while (temp->_next) {
 		newTail = temp;
 		temp = temp->_next;
 	}
