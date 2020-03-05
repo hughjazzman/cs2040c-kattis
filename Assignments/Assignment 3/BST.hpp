@@ -34,6 +34,7 @@ TreeNode<T>* BinarySearchTree<T>::_insert(TreeNode<T>* current, T x) {
 		else
 		{
 			current->_left = new TreeNode<T>(x);
+			_size++;
 		}
 	}
 	else if (x > current->_item) {
@@ -42,6 +43,7 @@ TreeNode<T>* BinarySearchTree<T>::_insert(TreeNode<T>* current, T x) {
 		else
 		{
 			current->_right = new TreeNode<T>(x);
+			_size++;
 		}
 	}
 	else
@@ -72,11 +74,12 @@ TreeNode<T>* BinarySearchTree<T>::_insert(TreeNode<T>* current, T x) {
 template <class T>
 void BinarySearchTree<T>::insert(T x) {
 
-	if (_root == NULL)
+	if (_root == NULL) {
 		_root = new TreeNode<T>(x);
+		_size++;
+	}
 	else
 		_root = _insert(_root, x);
-	_size++;
 
 }
 
