@@ -1,7 +1,63 @@
-#pragma once
-#ifndef BSTHPP
-#define BSTHPP
-#include "BST.h"
+#include <iostream>
+using namespace std;
+template <class T>
+class BinarySearchTree;
+
+template <class T>
+class TreeNode {
+private:
+	T _item;
+	TreeNode<T>* _left;
+	TreeNode<T>* _right;
+	int _height;
+public:
+	TreeNode(T x) { _left = _right = NULL; _item = x; _height = 0; };
+
+	friend BinarySearchTree<T>;
+	
+	//You may add any further functions/variables here, if necessary.
+	//But please do not modify any of the functions above in this class.
+};
+
+template <class T>
+class BinarySearchTree {
+private:
+	int _size;
+	TreeNode<T>* _root;
+	void _printTree(int indent, TreeNode<T>*, bool withHeight);
+
+	bool _exist(TreeNode<T>* node, T x);
+
+	void _updateHeight(TreeNode<T>*);
+
+	void _preOrderPrint(TreeNode<T>*);
+	void _inOrderPrint(TreeNode<T>*);
+	void _postOrderPrint(TreeNode<T>*);
+	TreeNode<T>* _insert(TreeNode<T>* current, T x);
+	
+	int _balance(TreeNode<T>*);
+	TreeNode<T>* _rightRotation(TreeNode<T>*);
+	TreeNode<T>* _leftRotation(TreeNode<T>*);
+    void _destroySubTree(TreeNode<T>*);
+
+public:
+	BinarySearchTree() { _root = NULL; _size = 0; }
+	~BinarySearchTree();
+	int size() { return _size; };
+	void insert(T);
+	void printTree(bool withHeight = 1);
+	void inOrderPrint();
+	void postOrderPrint();
+	void preOrderPrint();
+	T searchMax() ;
+	T searchMin();
+	bool exist(T x);
+	T successor(T);
+	
+	//You may add any further functions/variables here, if necessary.
+	//But please do not modify any of the functions above in this class.
+};
+
 
 template <class T>
 void BinarySearchTree<T>::_updateHeight(TreeNode <T>* current) {
@@ -10,11 +66,11 @@ void BinarySearchTree<T>::_updateHeight(TreeNode <T>* current) {
 		leftHeight = current->_left->_height;
 	if (current->_right)
 		rightHeight = current->_right->_height;
-	current->_height = (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+	current->_height = leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
 }
 
 template <class T>
-short BinarySearchTree<T>::_balance(TreeNode <T>* current) {
+int BinarySearchTree<T>::_balance(TreeNode <T>* current) {
 	int leftHeight = -1, rightHeight = -1;
 	if (current->_left)
 		leftHeight = current->_left->_height;
@@ -25,8 +81,10 @@ short BinarySearchTree<T>::_balance(TreeNode <T>* current) {
 
 template <class T>
 TreeNode<T>* BinarySearchTree<T>::_insert(TreeNode<T>* current, T x) {
+
+
 	if (current->_item > x)
-	{	
+	{
 		if (current->_left)
 			current->_left = _insert(current->_left, x);
 		else
@@ -49,7 +107,7 @@ TreeNode<T>* BinarySearchTree<T>::_insert(TreeNode<T>* current, T x) {
 	
 	_updateHeight(current);
 	
-	short balance = _balance(current);
+	int balance = _balance(current);
 	// Left heavy current
 	if (balance > 1) {
 		// Right heavy current.left
@@ -147,6 +205,7 @@ T BinarySearchTree<T>::successor(T x)
 template <class T>
 TreeNode<T>* BinarySearchTree<T>::_leftRotation(TreeNode<T>* node)
 {
+	
 	TreeNode<T> * newRoot = node->_right;
 	node->_right = newRoot->_left;
 	newRoot->_left = node;
@@ -166,25 +225,6 @@ TreeNode<T>* BinarySearchTree<T>::_rightRotation(TreeNode<T>* node)
 	return newRoot;
 }
 
-template <class T>
-void BinarySearchTree<T>::printTree(bool withHeight) {
-	_printTree(0, _root, withHeight);
-}
-
-template <class T>
-void BinarySearchTree<T>::preOrderPrint() {
-	_preOrderPrint(_root);
-	cout << endl;
-}
-
-
-template <class T>
-void BinarySearchTree<T>::_preOrderPrint(TreeNode<T>* node) {
-	if (!node) return;
-	cout << node->_item << " ";
-	_preOrderPrint(node->_left);
-	_preOrderPrint(node->_right);
-}
 
 template <class T>
 void BinarySearchTree<T>::inOrderPrint() {
@@ -216,45 +256,6 @@ void BinarySearchTree<T>::_postOrderPrint(TreeNode<T>* node) {
 	cout << node->_item << " ";
 }
 
+//If you defined any further functions in the above classes, remember to include them.
 
 
-template <class T>
-void BinarySearchTree<T>::_printTree(int indent, TreeNode<T>* node, bool withHeight) {
-
-	if (!node)
-		return;
-
-	if (node->_right)
-		_printTree(indent + 2, node->_right, withHeight);
-	for (int i = 0; i < indent; i++)
-		cout << "  ";
-	cout << node->_item;
-	if (withHeight)
-		cout << "(h=" << node->_height << ")";
-	cout << endl;
-	if (node->_left)
-		_printTree(indent + 2, node->_left, withHeight);
-
-
-};
-
-
-template <class T>
-void BinarySearchTree<T> ::_destroySubTree(TreeNode<T>* node)
-{
-	if (node->_left)
-		_destroySubTree(node->_left);
-	if (node->_right)
-		_destroySubTree(node->_right);
-	delete node;
-}
-
-template <class T>
-BinarySearchTree<T> :: ~BinarySearchTree()
-{
-	if (_root)
-		_destroySubTree(_root);
-}
-
-
-#endif
