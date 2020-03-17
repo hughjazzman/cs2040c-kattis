@@ -1,17 +1,19 @@
-#pragma once
-#include "HashTable.h"
+int h(int x) {
+	int ans = 0;
+	while (x > 0) {
+		ans += x % 10;
+		x /= 10;
+	}
+	return ans;
+}
 
 HashTable::HashTable(int n) {
-
 	//initially, populate hashtable with 0s
 	N = n;
 	while (n--) ht[n] = 0;
 }
 
-
-
 void HashTable::insertWithoutCollision(int n) {
-
 	ht[h(n) % N] = n;
 }
 
@@ -57,18 +59,12 @@ bool HashTable::existWithCollision(int n) {
 	return false;
 }
 
-void HashTable::printHashTable() {
-	
-	cout << "Current hash table: " << endl;
-	for (int i = 0; i < N; i++) {
-		cout << ht[i] << " ";
-	}
-	cout << endl;
-}
-
 /*
-This is not a good hash function, since the numbers will be clustered together. 
-For example, numbers under 100 will all only have hash values of less than 20.
-This causes non-uniform hashing.
+This is a good hash function.
 
+Firstly, it is very quick to compute, taking O(log n) time since it is only summing up the digits.
+
+Secondly, across huge range of numbers, it will spread across the entire hash table. 
+Of course, it will depend on your range of numbers and size of hash table used as well. 
+Numbers from 1 to 1000000 will have hash values from 1 to 54.
 */

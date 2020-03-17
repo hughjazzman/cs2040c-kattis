@@ -1,84 +1,34 @@
-#pragma once
-
-#ifndef LINKEDLIST_HPP_
-#define LINKEDlIST_HPP_
-
-#include <iostream>
-#include "LinkedList.h"
-using namespace std;
-
-/*
- * LISTNODE CONSTRUCTUORS AND FUNCTIONS
- */
-ListNode::ListNode( int item ) {
-    _item = item;
-    _next = NULL;
-}
-
-void ListNode::printItem() {
-    cout << _item;
-}
-
-
-/*
- * LIST CONSTRUCTORS AND FUNCTIONS
- */
-List::List() {
-    _head = NULL;
-}
-
-List::~List() {
-    while ( _head ) {
-        removeHead();
-    }
-}
-
-void List::insertHead( int item ) {
-    ListNode* newNode = new ListNode( item );
-    newNode->_next = _head;
-    _head = newNode;
-}
-
-int List::getHeadItem() {
-    return _head->_item;
-}
-
-int List::removeHead() {
-    int item = SHRT_MIN;  // -32768
-    ListNode* temp;
-
-    if ( _head ) {
-        temp = _head;
-        item = getHeadItem();
-        _head = _head->_next;
-        delete temp;
-    }
-
-    return item;
-}
-
-void List::reverse() {
-    ListNode* curr = _head;
-    ListNode* prev = NULL;
-    ListNode* next = NULL;
-
-    while ( curr ) {
-        next = curr->_next;
-        curr->_next = prev;
-        prev = curr;
-        curr = next;
-    }
-
-    _head = prev;
-}
-
+class ListNode {
+private:
+    int _item;
+    ListNode* _next;
+public:
+    ListNode( int );        // Constructs the list node with parameter
+    void printItem();       // Prints the item
+    friend class List;
+};
+class List {
+private:
+    ListNode* _head;
+    void recursiveMergeSort( List* );   // TODO: Implement merge sort
+public:
+    List();                             // Constructs an empty list
+    ~List();                            // Destructs a list
+    void insertHead( int );             // Inserts the new value into the linked list
+    int getHeadItem();                  // Retrieves the value in the head node
+    int removeHead();                   // Removes the head node and returns the value removed
+    void reverse();                     // Reverses the list
+    void bubbleSort( bool );            // TODO: Implement bubble sort
+    void mergeSort();                   // Calls the recursive merge sort function
+    void split( List* );                // TODO: Splits the linked lists into two halves
+    void merge( List* );                // TODO: Merge two linked lists in ascending order
+    void print( bool );                 // Prints all items of the linked lists.
+};
 void List::bubbleSort( bool printAtEveryIteration ) {
-
     // TODO: Implement bubble sort on this implementation of single linked list.
     //       Print the linked list after every pass in the outer iteration
     //       using print(false) function in List class if parameter is true.
     //       The list should be sorted in ascending order.
-
     // ENTER YOUR ANSWER BELOW.
     ListNode* temp = _head;
     // If 0 or 1 item do nothing
@@ -99,15 +49,8 @@ void List::bubbleSort( bool printAtEveryIteration ) {
         }
         if (printAtEveryIteration && swap) print(false);
     }
-
-
     // ENTER YOUR ANSWER ABOVE.
 }
-
-void List::mergeSort() {
-    recursiveMergeSort( this );
-}
-
 void List::recursiveMergeSort( List* list ) {
     // TODO: Implement merge sort on this implementation of single linked list.
     // ENTER YOUR ANSWER BELOW.
@@ -120,11 +63,8 @@ void List::recursiveMergeSort( List* list ) {
         recursiveMergeSort(&list2);
         list->merge(&list2);
     }
-
-
     // ENTER YOUR ANSWER ABOVE.
 }
-
 void List::split( List* otherList ) {
     // TODO: Implement splitting of the current list.
     //       The first half of the list will be pointed by itself.
@@ -147,10 +87,8 @@ void List::split( List* otherList ) {
     }
     if (cutoff)
         cutoff->_next = NULL;
-
     // ENTER YOUR ANSWER ABOVE.
 }
-
 void List::merge( List* otherList ) {
     // TODO: Implement merging of current list and otherList.
     //       The otherList should be empty after merging.
@@ -158,7 +96,6 @@ void List::merge( List* otherList ) {
     //
     // ENTER YOUR ANSWER BELOW.
     List sortedList;
-
     while (_head && otherList->_head) {
         if (otherList->getHeadItem()> getHeadItem())
             sortedList.insertHead(removeHead());
@@ -169,28 +106,7 @@ void List::merge( List* otherList ) {
         sortedList.insertHead(removeHead());
     while (otherList->_head)
         sortedList.insertHead(otherList->removeHead());
-
     while (sortedList._head)
         insertHead(sortedList.removeHead());
     // ENTER YOUR ANSWER ABOVE.
 }
-
-void List::print( bool printWithNewLine = false ) {
-
-    ListNode* curr = _head;
-
-    while ( curr ) {
-        cout << curr->_item;
-
-        if ( printWithNewLine )
-            cout << endl;
-        else
-            cout << " ";
-
-        curr = curr->_next;
-    }
-
-    cout << endl;
-}
-
-#endif

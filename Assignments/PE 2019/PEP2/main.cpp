@@ -119,6 +119,24 @@ void testSplit() {
     cout << "If your first linked list contains 80 70 60 50, and your second linked list contains 40 30 20 10 0,\nyou will still be awarded full marks for this test case.";
     cout << endl << endl;
 
+    List fifthList;
+    List sixthList;
+    int arr[] = { 72, 63, 54, 45, 36, 27, 18, 9, 0 };
+    for (int i = 0; i < 9; i++)
+        fifthList.insertHead(arr[8-i]);
+
+    cout << "Fifth List with 9 elements: ";
+    fifthList.print();
+    cout << "Splitting the list into fifthList and sixthList." << endl << endl;
+    fifthList.split(&sixthList);
+    cout << "Fifth List: ";
+    fifthList.print();
+    cout << endl;
+
+    cout << "Fourth List: ";
+    sixthList.print();
+    cout << endl;
+    cout << endl;
     cout << endl;
 }
 
