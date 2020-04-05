@@ -65,6 +65,9 @@ void Heap<T>::_bubbleDown(int index) {
 		left = 2 * index + 1;
 		right = left + 1;
 	}
+	// Deal with no right, and left child higher priority
+	if (left < _n && _heap[left] > _heap[index])
+	    _swap(index, left);
 }
 
 template <class T>
@@ -126,7 +129,7 @@ void Heap<T>::deleteItem(T x)
 	int i = _lookFor(x);
 	// If not found do nothing
 	if (i == -1) return;
-	T last = _heap[_n-- - 1];
+	T last = _heap[--_n];
 	_heap[i] = last;
 	x > last ? _bubbleDown(i) : _bubbleUp(i);
 }
