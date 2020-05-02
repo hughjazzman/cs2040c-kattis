@@ -1,3 +1,5 @@
+// CS2040/C Past Finals G
+
 #include <vector>
 #include <iostream>
 #include <queue>

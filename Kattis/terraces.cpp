@@ -1,5 +1,5 @@
-#include <string>
-#include <algorithm>
+// CS2040/C Past Finals C
+
 #include <vector>
 #include <queue>
 #include <iostream>
@@ -7,7 +7,6 @@
 #include <tuple>
 
 #define FOR(i,k) for(int i=0;i<k;i++)
-
 
 using namespace std;
 

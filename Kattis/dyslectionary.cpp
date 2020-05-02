@@ -1,3 +1,5 @@
+// CS2040/C Past Finals E
+
 #include <string>		// string
 #include <algorithm>	// sort
 #include <vector>		// vector
