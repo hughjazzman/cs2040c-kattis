@@ -103,7 +103,6 @@ void bfs(vector<string>& g, int x, int y, unordered_map<iii, int, key_hash>& mp,
 
 
 void dd() {
-	//int gd[6][6][6][4][3];
 	vector<iii> arr(24);
 	unordered_map<iii, int, key_hash> mp;
 	findOrientations(arr, mp);
