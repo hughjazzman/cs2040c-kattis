@@ -1,7 +1,7 @@
 #include <iostream>
 #include <set>
 #include <string>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -14,7 +14,7 @@ void dr() {
 	ii cat, new_cat;
 	string name;
 	set<is> st;
-	map<string, ii> mp;
+	unordered_map<string, ii> mp;
 	cin >> N;
 	while (N--) {
 		cin >> c;
